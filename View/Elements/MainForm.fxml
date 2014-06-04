@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane1" prefHeight="324.0" prefWidth="533.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainController">
+<children><MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="533.0">
+  <menus>
+    <Menu mnemonicParsing="false" text="Файл">
+        <items>
+            <MenuItem fx:id="menuNewGame" mnemonicParsing="false" onAction="#action" text="Новая игра..." />
+            <MenuItem fx:id="menuSearch" disable="true" mnemonicParsing="false" onAction="#action" text="Поиск открытых игр..." />
+            <SeparatorMenuItem />
+            <MenuItem fx:id="menuChangeUser" mnemonicParsing="false" onAction="#action" text="Сменить пользователя" />
+            <MenuItem fx:id="menuClose" mnemonicParsing="false" onAction="#action" text="Выход" />
+        </items>
+    </Menu>
+    <Menu mnemonicParsing="false" text="Справка">
+        <items>
+            <MenuItem mnemonicParsing="false" text="О программе" />
+        </items>
+    </Menu>
+  </menus>
+</MenuBar>
+<TitledPane layoutX="8.0" layoutY="34.0" text="Игрок 1">
+    <content>
+        <AnchorPane prefHeight="68.0" prefWidth="102.0">
+            <children>
+                <Label fx:id="labelFirstPlayerWins" layoutX="7.0" layoutY="7.5" text="Побед: 0" />
+                <Label fx:id="labelFirstPlayerLoses" layoutX="7.0" layoutY="32.0" text="Поражений: 0" />
+            </children></AnchorPane>
+    </content>
+</TitledPane>
+<TitledPane layoutX="422.0" layoutY="34.0" text="Игрок 2">
+    <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="68.0" prefWidth="102.0">
+            <children>
+                <Label fx:id="labelSecondPlayerWins" layoutX="7.0" layoutY="7.5" text="Побед: 0" />
+                <Label fx:id="labelSecondPlayerLoses" layoutX="7.0" layoutY="32.0" text="Поражений: 0" />
+            </children>
+        </AnchorPane>
+    </content>
+</TitledPane>
+<Label layoutX="7.0" layoutY="279.0" text="Время на ход:" />
+<Label layoutX="30.0" layoutY="299.0" text="03:00" />
+<Label layoutX="449.0" layoutY="280.0" text="Время на ход:" />
+<Label layoutX="472.0" layoutY="300.0" text="03:00" /><AnchorPane fx:id="gamePane" layoutX="214.0" layoutY="98.0" prefHeight="113.0" prefWidth="106.0"></AnchorPane>
+</children></AnchorPane>
