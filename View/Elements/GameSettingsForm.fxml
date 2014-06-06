@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="131.0" prefWidth="419.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="AnchorPane" prefHeight="131.0" prefWidth="419.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.GameSettingsController">
 <children>
     <TitledPane animated="false" collapsible="false" layoutX="14.0" layoutY="14.0" text="Выбор режима игры">
         <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="40.0" prefWidth="241.0">
                 <children>
-                    <RadioButton layoutX="12.0" layoutY="9.5" mnemonicParsing="false" selected="false" text="Онлайн" disable="true" />
-                    <RadioButton layoutX="101.0" layoutY="10.0" mnemonicParsing="false" selected="true" text="Против компьютера" />
+                    <RadioButton fx:id="raioButtonOnline" layoutX="12.0" layoutY="9.5" mnemonicParsing="false" selected="false" text="Онлайн" disable="true" />
+                    <RadioButton fx:id="raioButtonOffline" layoutX="101.0" layoutY="10.0" mnemonicParsing="false" selected="true" text="Против компьютера" />
                 </children>
             </AnchorPane>
         </content>
     </TitledPane>
-    <Button fx:id="buttonOk" layoutX="121.0" layoutY="92.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="84.0" text="Создать" />
-    <Button fx:id="buttonCancel" layoutX="215.0" layoutY="92.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="84.0" text="Отмена" /><TitledPane animated="false" collapsible="false" layoutX="271.0" layoutY="14.0" text="Выбор режима игры">
+    <Button fx:id="buttonOk" layoutX="121.0" layoutY="92.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="84.0" text="Создать" defaultButton="true" />
+    <Button fx:id="buttonCancel" layoutX="215.0" layoutY="92.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="84.0" text="Отмена" cancelButton="true" />
+    <TitledPane animated="false" collapsible="false" layoutX="271.0" layoutY="14.0" text="Выбор режима игры">
 <content>
 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="40.0" prefWidth="108.0">
 <children>
-    <ChoiceBox layoutX="10.0" layoutY="7.0" prefHeight="25.0" prefWidth="105.0" />
+    <ChoiceBox fx:id="choiceBoxGame" layoutX="10.0" layoutY="7.0" prefHeight="25.0" prefWidth="105.0" />
 </children>
 </AnchorPane>
 </content>

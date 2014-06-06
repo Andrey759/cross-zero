@@ -10,7 +10,7 @@ public class EmptyGame extends Game {
     }
 
     public int getGameSize() {
-        return super.getGameSize();
+        return 0;
     }
 
 }

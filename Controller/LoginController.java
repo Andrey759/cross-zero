@@ -3,7 +3,7 @@ package Controller;
 import Controller.Classes.Hash;
 import Controller.Classes.Listener;
 import Model.Model;
-import View.Forms;
+import View.EForm;
 import java.net.URL;
 import java.util.*;
 
@@ -17,7 +17,6 @@ public class LoginController implements Initializable, Listener {
 
     private static boolean firstLoad = true;
 
-    @FXML private AnchorPane anchorPane1;
     @FXML private Label labelLogin;
     @FXML private Label labelPass;
     @FXML private TextField editLogin;
@@ -31,7 +30,7 @@ public class LoginController implements Initializable, Listener {
         
         if(event.getSource().equals(buttonOk)) {
             String hpass = Hash.md5(editPass.getText());
-            Model.getIntance().getFirstUser().set(editLogin.getText(), hpass, editPass.getText().length());
+            Model.getIntance().getFirstUser().set(editLogin.getText(), hpass);
         }
 
         if(event.getSource().equals(buttonCancel)) {
@@ -42,11 +41,12 @@ public class LoginController implements Initializable, Listener {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        EForm.LoginForm.setController(this);
     }
 
     @Override
     public void update() {
-        Core.getIntance().setCurrentController(this);
+        //Core.getIntance().setCurrentController(this);
     }
 
     public void setFirstLoad() {

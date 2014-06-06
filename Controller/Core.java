@@ -33,6 +33,10 @@ public class Core {
     public void changeLogin() {
         Forms.setScene(EForm.LoginForm);
     }
+
+    public void openGameSettings() {
+        Forms.newWindow(EForm.GameSettingsForm);
+    }
     
     public void update() {
         this.getCurrentController().update();

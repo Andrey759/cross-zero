@@ -10,8 +10,8 @@ public class WinLine {
     public WinLine() { }
 
     public WinLine(int beginX, int beginY, int endX, int endY) {
-        setBegin(beginX, beginX);
-        setEnd(endX, endX);
+        setBegin(beginX, beginY);
+        setEnd(endX, endY);
     }
 
     public int getBeginX() {

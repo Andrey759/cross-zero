@@ -7,7 +7,8 @@ import javax.swing.GroupLayout.Group;
 public enum EForm {
     
     LoginForm("LoginForm.fxml", "Аутентификация"),
-    MainForm("MainForm.fxml", "Игра крестики-нолики");
+    MainForm("MainForm.fxml", "Игра крестики-нолики"),
+    GameSettingsForm("GameSettingsForm.fxml", "Новая игра");
     
     private String fileName;
     private String title;

@@ -25,16 +25,11 @@ public class Forms extends Application {
         this.stage = stage;
         for(EForm f : EForm.values())
             f.setScene(new Scene((javafx.scene.Parent) FXMLLoader.load(getClass().getResource("Elements/"+f.getFileName()))));
-        Core.getIntance().setCurrentController(EForm.LoginForm.getController());
         stage.setResizable(false);
         stage.setTitle(EForm.LoginForm.getTitle());
         stage.setScene(EForm.LoginForm.getScene());
+        Core.getIntance().setCurrentController(EForm.LoginForm.getController());
         stage.show();
-//      Stage stage2 = new Stage();
-//      stage2.setResizable(false);
-//      stage2.setTitle(EForm.MainForm.getTitle());
-//      stage2.setScene(EForm.MainForm.getScene());
-//      stage2.show();
     }
 
     public static void main(String[] args) {
@@ -71,6 +66,18 @@ public class Forms extends Application {
         Core.getIntance().getCurrentController().update();
 
         stage.show();
+    }
+
+    public static void newWindow(EForm scene) {
+        Stage wStage = new Stage();
+        wStage.setResizable(false);
+        wStage.setTitle(scene.getTitle());
+        wStage.setScene(scene.getScene());
+
+        Core.getIntance().setCurrentController(scene.getController());
+        Core.getIntance().getCurrentController().update();
+
+        wStage.show();
     }
 
     public void updateScene() throws IOException {

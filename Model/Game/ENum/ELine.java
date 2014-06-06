@@ -4,7 +4,8 @@ public enum ELine {
 
     HorizontalLine(1, 0),
     VerticalLine(0, 1),
-    DiagonalLine(1, 1);
+    DiagonalLine(1, 1),
+    DiagonalLine2(-1, 1);
 
     private int dx;
     private int dy;

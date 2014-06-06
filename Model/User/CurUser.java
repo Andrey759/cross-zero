@@ -9,7 +9,7 @@ import Controller.Classes.FileClass;
 public class CurUser extends User {
     
     private String nick = null;
-    private int passLength = 0;
+    private String hpass = null;
     private int wins = 0;
     private int loses = 0;
     private final String dir = "Users";
@@ -19,16 +19,28 @@ public class CurUser extends User {
     public String getNick() {
         return nick;
     }
-    
-    public int getPassLength() {
-        return passLength;
+
+    public int getWins() {
+        return wins;
+    }
+
+    public int getLoses() {
+        return loses;
+    }
+
+    public void addWin() {
+        wins++;
+    }
+
+    public void addLose() {
+        loses++;
     }
     
-    public void set(String nick, String hpass, int passLength) {
+    public void set(String nick, String hpass) {
         String filename = dir+"\\"+nick+".txt";
         String filehpass;
         this.nick = nick;
-        this.passLength = passLength;
+        this.hpass = hpass;
         file.makeDir(dir);
         if(!file.issetFile(filename)) { //Если нету такого пользователя - создаём
             writeNewUser(filename, hpass);
@@ -55,6 +67,11 @@ public class CurUser extends User {
         file.write(wins);
         file.write(loses);
         file.close();
+    }
+
+    private void save() {
+        String filename = dir+"\\"+getNick()+".txt";
+        writeNewUser(filename, hpass);
     }
     
 }
