@@ -20,7 +20,7 @@ public class Game {
     private EField firstPlayer;
     private EField secondPlayer;
     List<Point> emptyFields = new ArrayList<>();
-    //    private int[][] priority;
+//  private int[][] priority;
     ArrayList<WinLine> winLines;
     boolean gameIsEnded;
     EPlayer winner;

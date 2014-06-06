@@ -10,7 +10,6 @@ public class OfflineGame extends Game {
 
     public OfflineGame(int gameSize, int winLength) {
         super(gameSize, winLength);
-        if(gameSize >= 3 && winLength >= 3) Core.getIntance().update();
     }
 
     @Override

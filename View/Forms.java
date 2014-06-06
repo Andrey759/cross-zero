@@ -2,6 +2,7 @@ package View;
 
 import java.io.IOException;
 
+import Controller.Classes.FileClass;
 import Controller.Core;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -44,6 +45,14 @@ public class Forms extends Application {
         stage.setTitle(title);
     }
 
+    public static void setWidth(Double width) {
+        stage.setWidth(width + 28);
+    }
+
+    public static void setHeight(Double height) {
+        stage.setHeight(height + 28);
+    }
+
     public static void show() {
         stage.show();
     }
@@ -60,6 +69,8 @@ public class Forms extends Application {
         stage.hide();
         stage.setTitle(scene.getTitle());
         stage.setScene(scene.getScene());
+        //stage.setWidth(scene.getScene().getWidth());
+        //stage.setHeight(scene.getScene().getHeight());
         stage.centerOnScreen();
 
         Core.getIntance().setCurrentController(scene.getController());

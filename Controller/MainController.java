@@ -41,26 +41,25 @@ public class MainController implements Initializable, Listener {
 
         if(event.getSource().equals(menuNewGame)) {
             Model.getIntance().newGame(EGameMode.offline, 3, 3);
-            //Core.getIntance().openGameSettings();
         }
 
-        if(event.getSource().equals(menuSearch)) {
+        else if(event.getSource().equals(menuSearch)) {
             //
         }
 
-        if(event.getSource().equals(menuChangeUser)) {
+        else if(event.getSource().equals(menuChangeUser)) {
             Core.getIntance().changeLogin();
         }
 
-        if(event.getSource().equals(menuClose)) {
+        else if(event.getSource().equals(menuClose)) {
             Core.getIntance().close();
         }
 
-        for(int x = 0; x < Model.getIntance().getGame().getGameSize(); x++)
-            for(int y = 0; y < Model.getIntance().getGame().getGameSize(); y++)
-                if(event.getSource().equals(field[x][y]))
-                    Model.getIntance().getGame().move(x, y, EPlayer.FirstPlayer);
-
+        else
+            for(int x = 0; x < field.length; x++)
+                for(int y = 0; y < field.length; y++)
+                    if(event.getSource().equals(field[x][y]))
+                        Model.getIntance().getGame().move(x, y, EPlayer.FirstPlayer);
     }
     
     @Override
@@ -101,16 +100,17 @@ public class MainController implements Initializable, Listener {
         for(int x = 0; x < Model.getIntance().getGame().getGameSize(); x++) {
             for(int y = 0; y < Model.getIntance().getGame().getGameSize(); y++) {
                 field[x][y] = new Button();
-                field[x][y].setLayoutX(21 + 22 * x);
+                field[x][y].setLayoutX(21 + 24 * x);
                 field[x][y].setLayoutY(14 + 25 * y);
                 field[x][y].setPrefHeight(25);
-                field[x][y].setPrefWidth(22);
+                field[x][y].setPrefWidth(24);
                 field[x][y].setMnemonicParsing(false);
                 field[x][y].setId("field[" + x + "," + y + "]");
                 field[x][y].setOnAction(this::action);
                 gamePane.getChildren().add(field[x][y]);
             }
         }
+        updateFields();
     }
 
     private void updateFields() {

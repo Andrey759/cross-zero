@@ -46,5 +46,10 @@ public class Model {
         }
         Core.getIntance().update();
     }
+
+    public void empty() {
+        secondUser = new EmptyUser();
+        game = new EmptyGame();
+    }
     
 }

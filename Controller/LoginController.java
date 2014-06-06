@@ -7,10 +7,10 @@ import View.EForm;
 import java.net.URL;
 import java.util.*;
 
+import View.Forms;
 import javafx.event.*;
 import javafx.fxml.*;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
 
 //Контроллер первого представления, ленивый синглтон
 public class LoginController implements Initializable, Listener {
@@ -19,10 +19,16 @@ public class LoginController implements Initializable, Listener {
 
     @FXML private Label labelLogin;
     @FXML private Label labelPass;
+    @FXML private Label labelError;
     @FXML private TextField editLogin;
     @FXML private PasswordField editPass;
     @FXML private Button buttonOk;
     @FXML private Button buttonCancel;
+
+    private double sceneHeight = 0;
+    private double buttonOkY;
+    private double buttonCancelY;
+    private final double height = 25;
 
     private void LoginController() { }
 
@@ -42,15 +48,33 @@ public class LoginController implements Initializable, Listener {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         EForm.LoginForm.setController(this);
+        buttonOkY = buttonOk.getLayoutY();
+        buttonCancelY = buttonCancel.getLayoutY();
     }
 
     @Override
     public void update() {
-        //Core.getIntance().setCurrentController(this);
+        if(sceneHeight == 0) sceneHeight = EForm.LoginForm.getScene().getHeight();
+        if(Model.getIntance().getFirstUser().getNick().length() > 0) {
+            editLogin.requestFocus();
+            editLogin.setText("");
+            editPass.setText("");
+            labelError.setText("");
+            Forms.setHeight(sceneHeight);
+            buttonOk.setLayoutY(buttonOkY);
+            buttonCancel.setLayoutY(buttonCancelY);
+        } else {
+            editPass.requestFocus();
+            editPass.selectAll();
+            labelError.setText("Ошибка: неправильный пароль.");
+            Forms.setHeight(sceneHeight + height);
+            buttonOk.setLayoutY(buttonOkY + height);
+            buttonCancel.setLayoutY(buttonCancelY + height);
+        }
     }
 
-    public void setFirstLoad() {
-        firstLoad = true;
+    public void setHeight(Double height) {
+        this.sceneHeight = height;
     }
 
 }
