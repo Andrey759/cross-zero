@@ -3,7 +3,7 @@ package Model.User;
 public class AIUser extends CurUser {
 
     public AIUser() {
-        set("Компьютер", "");
+        super.set("Компьютер", "");
     }
 
     @Override

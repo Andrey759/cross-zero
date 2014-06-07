@@ -1,6 +1,6 @@
 package Controller;
 
-import Controller.Classes.Listener;
+import Controller.Classes.ListenerWithSize;
 import View.EForm;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,12 +8,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.RadioButton;
+import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class GameSettingsController implements Initializable, Listener {
+public class GameSettingsController implements Initializable, ListenerWithSize {
 
+    @FXML private AnchorPane mainPane;
     @FXML private RadioButton raioButtonOnline;
     @FXML private RadioButton raioButtonOffline;
     @FXML private ChoiceBox choiceBoxGame;
@@ -34,5 +36,15 @@ public class GameSettingsController implements Initializable, Listener {
     @Override
     public void update() {
         //
+    }
+
+    @Override
+    public double getWidth() {
+        return mainPane.getPrefWidth();
+    }
+
+    @Override
+    public double getHeight() {
+        return mainPane.getPrefHeight();
     }
 }

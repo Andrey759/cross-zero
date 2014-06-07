@@ -2,7 +2,6 @@ package View;
 
 import java.io.IOException;
 
-import Controller.Classes.FileClass;
 import Controller.Core;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -13,19 +12,21 @@ import javafx.stage.Stage;
 // - возникает ошибка при обращении к нестатическим переменным в методе start
 public class Forms extends Application {
 
-    private static Forms instance = new Forms();
+//    private static Forms instance = new Forms();
 
-    public static Forms getIntance() {
-        return instance;
-    }
+//    public static Forms getIntance() {
+//        return instance;
+//    }
 
     private static Stage stage;
 
     @Override
     public void start(Stage stage) throws Exception {
         this.stage = stage;
-        for(EForm f : EForm.values())
-            f.setScene(new Scene((javafx.scene.Parent) FXMLLoader.load(getClass().getResource("Elements/"+f.getFileName()))));
+        for(EForm f : EForm.values()) {
+            f.setScene(new Scene(FXMLLoader.load(getClass().getResource("Elements/" + f.getFileName()))));
+            f.setSize(f.getController().getWidth(), f.getController().getHeight());
+        }
         stage.setResizable(false);
         stage.setTitle(EForm.LoginForm.getTitle());
         stage.setScene(EForm.LoginForm.getScene());
@@ -46,11 +47,11 @@ public class Forms extends Application {
     }
 
     public static void setWidth(Double width) {
-        stage.setWidth(width + 28);
+        stage.setWidth(width + 16);
     }
 
     public static void setHeight(Double height) {
-        stage.setHeight(height + 28);
+        stage.setHeight(height + 38);
     }
 
     public static void show() {
@@ -69,8 +70,8 @@ public class Forms extends Application {
         stage.hide();
         stage.setTitle(scene.getTitle());
         stage.setScene(scene.getScene());
-        //stage.setWidth(scene.getScene().getWidth());
-        //stage.setHeight(scene.getScene().getHeight());
+        setWidth(scene.getWidth());
+        setHeight(scene.getHeight());
         stage.centerOnScreen();
 
         Core.getIntance().setCurrentController(scene.getController());
@@ -96,7 +97,7 @@ public class Forms extends Application {
         for(EForm f : EForm.values())
             if(f.getScene().equals(getScene()))
                 current = f;
-        current.setScene(new Scene((javafx.scene.Parent) FXMLLoader.load(getClass().getResource("Elements/"+current.getFileName()))));
+        current.setScene(new Scene(FXMLLoader.load(getClass().getResource("Elements/"+current.getFileName()))));
         stage.setScene(current.getScene());
     }
 

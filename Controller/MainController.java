@@ -1,7 +1,6 @@
 package Controller;
 
-import Controller.Classes.ExceptionLog;
-import Controller.Classes.Listener;
+import Controller.Classes.ListenerWithSize;
 import Model.Game.ENum.EField;
 import Model.Game.ENum.EGameMode;
 import Model.Game.ENum.EPlayer;
@@ -19,8 +18,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 //Контроллер первого представления, ленивый синглтон
-public class MainController implements Initializable, Listener {
+public class MainController implements Initializable, ListenerWithSize {
 
+    @FXML private AnchorPane mainPane;
     @FXML private AnchorPane gamePane;
     @FXML private Label labelFirstPlayerWins;
     @FXML private Label labelFirstPlayerLoses;
@@ -48,6 +48,7 @@ public class MainController implements Initializable, Listener {
         }
 
         else if(event.getSource().equals(menuChangeUser)) {
+            Model.getIntance().empty();
             Core.getIntance().changeLogin();
         }
 
@@ -82,6 +83,8 @@ public class MainController implements Initializable, Listener {
             removeFields();
             if(Model.getIntance().getGame().getGameSize() > 0)
                 createFields();
+            else
+                updateFields();
         } else
             updateFields();
     }
@@ -137,6 +140,16 @@ public class MainController implements Initializable, Listener {
                 for (int y = 0; y < Model.getIntance().getGame().getGameSize(); y++)
                     field[x][y].setDisable(false);
         }
+    }
+
+    @Override
+    public double getWidth() {
+        return mainPane.getPrefWidth() - 9;
+    }
+
+    @Override
+    public double getHeight() {
+        return mainPane.getPrefHeight();
     }
 
 }

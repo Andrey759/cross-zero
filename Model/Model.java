@@ -9,6 +9,7 @@ import Model.Game.GameMode.OnlineGame;
 import Model.User.AIUser;
 import Model.User.CurUser;
 import Model.User.EmptyUser;
+import View.EForm;
 
 
 public class Model {
@@ -23,7 +24,10 @@ public class Model {
         return instance;
     }
     
-    private Model() { }
+    private Model() {
+        firstUser.addListener(() -> {if(Model.getIntance().getFirstUser().getNick().length() > 0) Core.getIntance().successfulLogin();});
+        firstUser.addListener(Core.getIntance().getCurrentController());
+    }
     
     public CurUser getFirstUser() {
         return firstUser;

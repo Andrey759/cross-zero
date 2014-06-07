@@ -1,12 +1,12 @@
 package Model.User;
 
-import java.util.Observable;
-
-import Model.Model;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import Controller.Classes.ExceptionLog;
+import Controller.Classes.Listener;
 import Controller.Core;
 import Controller.Classes.FileClass;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CurUser extends User {
     
@@ -16,6 +16,7 @@ public class CurUser extends User {
     private int loses = 0;
     private final String dir = "Users";
     private FileClass file = new FileClass();
+    private List<Listener> listeners = new ArrayList<>();
 
     @Override
     public String getNick() {
@@ -43,7 +44,7 @@ public class CurUser extends User {
     public void set(String nick, String hpass) {
         if(nick.length() > 0) {
             String filename = dir + "\\" + nick + ".txt";
-            String filehpass;
+            String filehpass = "";
             this.nick = nick;
             this.hpass = hpass;
             file.makeDir(dir);
@@ -52,17 +53,26 @@ public class CurUser extends User {
                 Core.getIntance().successfulLogin();    //Входим
             } else {
                 file.openRd(filename);
-                if ((filehpass = file.readStr()) == null) writeNewUser();     //Если ошабка чтения файла,
-                if ((wins = file.readUnsignedInt()) == -1) writeNewUser();   //то создаём пользователя заново
-                if ((loses = file.readUnsignedInt()) == -1) writeNewUser();
-                if (hpass.trim().equals(filehpass.trim())) {
-                    Model.getIntance().empty();
-                    Core.getIntance().successfulLogin();    //Если пароль правильный, то входим
-                } else {
-                    file.close(); //Если пароль неверный
-                    empty();
-                    Core.getIntance().update();
+                if (!nick.equals("Компьютер")) filehpass = file.readStr();
+                if (filehpass == null) {                    //Если ошабка чтения файла,
+                    writeNewUser();                         //то создаём пользователя заново
+                    ExceptionLog.println("Ошибка: Не удалось прочитать из файла хэш пароля пользователя " + nick + ". Создан новый профиль пользователя.");
+                    return;
                 }
+                if ((wins = file.readUnsignedInt()) == -1) {
+                    writeNewUser();
+                    ExceptionLog.println("Ошибка: Не удалось прочитать из файла количество побед пользователя " + nick + ". Создан новый профиль пользователя.");
+                    return;
+                }
+                if ((loses = file.readUnsignedInt()) == -1) {
+                    writeNewUser();
+                    ExceptionLog.println("Ошибка: Не удалось прочитать из файла количество проигрышей пользователя " + nick + ". Создан новый профиль пользователя.");
+                    return;
+                }
+                file.close();
+                if (!hpass.trim().equals(filehpass.trim()))
+                    empty();                                   //Если пароль неверный, то пользователь пустой
+                notifyListeners();
             }
         } else
             empty();
@@ -82,11 +92,25 @@ public class CurUser extends User {
         file.close();
     }
 
-    private void empty() {
+    public void empty() {
         nick = "";
         hpass = "";
         wins = 0;
         loses = 0;
+    }
+
+    public void addListener(Listener listener) {
+        listeners.add(listener);
+    }
+
+    public void removeListener(Listener listener) {
+        listeners.remove(listener);
+    }
+
+    private void notifyListeners() {
+        if(!listeners.isEmpty())
+            for(Listener listener : listeners)
+                listener.update();
     }
     
 }

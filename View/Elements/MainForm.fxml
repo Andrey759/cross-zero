@@ -5,13 +5,13 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane id="AnchorPane1" prefHeight="324.0" prefWidth="533.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainController">
-<children><MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="533.0">
+<AnchorPane fx:id="mainPane" prefHeight="324.0" prefWidth="534.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainController">
+<children><MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="534.0">
   <menus>
     <Menu mnemonicParsing="false" text="Файл">
         <items>
             <MenuItem fx:id="menuNewGame" mnemonicParsing="false" onAction="#action" text="Новая игра..." />
-            <MenuItem fx:id="menuSearch" disable="true" mnemonicParsing="false" onAction="#action" text="Поиск открытых игр..." />
+            <MenuItem fx:id="menuSearch" visible="false" mnemonicParsing="false" onAction="#action" text="Поиск открытых игр..." />
             <SeparatorMenuItem />
             <MenuItem fx:id="menuChangeUser" mnemonicParsing="false" onAction="#action" text="Сменить пользователя" />
             <MenuItem fx:id="menuClose" mnemonicParsing="false" onAction="#action" text="Выход" />

@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="131.0" prefWidth="419.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.GameSettingsController">
+<AnchorPane fx:id="mainPane" prefHeight="131.0" prefWidth="419.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.GameSettingsController">
 <children>
     <TitledPane animated="false" collapsible="false" layoutX="14.0" layoutY="14.0" text="Выбор режима игры">
         <content>

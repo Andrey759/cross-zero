@@ -1,7 +1,7 @@
 package Controller;
 
 import Controller.Classes.Hash;
-import Controller.Classes.Listener;
+import Controller.Classes.ListenerWithSize;
 import Model.Model;
 import View.EForm;
 import java.net.URL;
@@ -11,12 +11,14 @@ import View.Forms;
 import javafx.event.*;
 import javafx.fxml.*;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 
 //Контроллер первого представления, ленивый синглтон
-public class LoginController implements Initializable, Listener {
+public class LoginController implements Initializable, ListenerWithSize {
 
     private static boolean firstLoad = true;
 
+    @FXML private AnchorPane mainPane;
     @FXML private Label labelLogin;
     @FXML private Label labelPass;
     @FXML private Label labelError;
@@ -36,7 +38,10 @@ public class LoginController implements Initializable, Listener {
         
         if(event.getSource().equals(buttonOk)) {
             String hpass = Hash.md5(editPass.getText());
-            Model.getIntance().getFirstUser().set(editLogin.getText(), hpass);
+            if(editLogin.getText().equals("Компьютер"))
+                Model.getIntance().getFirstUser().empty();
+            else
+                Model.getIntance().getFirstUser().set(editLogin.getText(), hpass);
         }
 
         if(event.getSource().equals(buttonCancel)) {
@@ -60,21 +65,26 @@ public class LoginController implements Initializable, Listener {
             editLogin.setText("");
             editPass.setText("");
             labelError.setText("");
-            Forms.setHeight(sceneHeight);
             buttonOk.setLayoutY(buttonOkY);
             buttonCancel.setLayoutY(buttonCancelY);
         } else {
             editPass.requestFocus();
             editPass.selectAll();
             labelError.setText("Ошибка: неправильный пароль.");
-            Forms.setHeight(sceneHeight + height);
+            Forms.setHeight(EForm.LoginForm.getHeight() + height);
             buttonOk.setLayoutY(buttonOkY + height);
             buttonCancel.setLayoutY(buttonCancelY + height);
         }
     }
 
-    public void setHeight(Double height) {
-        this.sceneHeight = height;
+    @Override
+    public double getWidth() {
+        return mainPane.getPrefWidth();
+    }
+
+    @Override
+    public double getHeight() {
+        return mainPane.getPrefHeight();
     }
 
 }
