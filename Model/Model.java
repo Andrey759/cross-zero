@@ -9,7 +9,6 @@ import Model.Game.GameMode.OnlineGame;
 import Model.User.AIUser;
 import Model.User.CurUser;
 import Model.User.EmptyUser;
-import View.EForm;
 
 
 public class Model {

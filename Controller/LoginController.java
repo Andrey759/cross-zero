@@ -1,9 +1,9 @@
 package Controller;
 
 import Controller.Classes.Hash;
-import Controller.Classes.ListenerWithSize;
+import Controller.Classes.ListenerHasSizeDisable;
 import Model.Model;
-import View.EForm;
+import View.ENum.EForm;
 import java.net.URL;
 import java.util.*;
 
@@ -14,7 +14,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 
 //Контроллер первого представления, ленивый синглтон
-public class LoginController implements Initializable, ListenerWithSize {
+public class LoginController implements Initializable, ListenerHasSizeDisable {
 
     private static boolean firstLoad = true;
 
@@ -32,10 +32,7 @@ public class LoginController implements Initializable, ListenerWithSize {
     private double buttonCancelY;
     private final double height = 25;
 
-    private void LoginController() { }
-
     @FXML public void action(ActionEvent event) {
-        
         if(event.getSource().equals(buttonOk)) {
             String hpass = Hash.md5(editPass.getText());
             if(editLogin.getText().equals("Компьютер"))
@@ -44,10 +41,8 @@ public class LoginController implements Initializable, ListenerWithSize {
                 Model.getIntance().getFirstUser().set(editLogin.getText(), hpass);
         }
 
-        if(event.getSource().equals(buttonCancel)) {
+        if(event.getSource().equals(buttonCancel))
             Core.getIntance().close();
-        }
-
     }
 
     @Override
@@ -87,4 +82,13 @@ public class LoginController implements Initializable, ListenerWithSize {
         return mainPane.getPrefHeight();
     }
 
+    @Override
+    public void setDisable(boolean value) {
+        mainPane.setDisable(value);
+    }
+
+    @Override
+    public boolean isDisable() {
+        return mainPane.isDisable();
+    }
 }

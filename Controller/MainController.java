@@ -1,11 +1,11 @@
 package Controller;
 
-import Controller.Classes.ListenerWithSize;
+import Controller.Classes.ListenerHasSizeDisable;
 import Model.Game.ENum.EField;
-import Model.Game.ENum.EGameMode;
 import Model.Game.ENum.EPlayer;
+import Model.Game.GameClasses.WinLine;
 import Model.Model;
-import View.EForm;
+import View.ENum.EForm;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -14,11 +14,15 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Line;
+
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 //Контроллер первого представления, ленивый синглтон
-public class MainController implements Initializable, ListenerWithSize {
+public class MainController implements Initializable, ListenerHasSizeDisable {
 
     @FXML private AnchorPane mainPane;
     @FXML private AnchorPane gamePane;
@@ -34,14 +38,11 @@ public class MainController implements Initializable, ListenerWithSize {
     @FXML private MenuItem menuChangeUser;
     @FXML private MenuItem menuClose;
     private Button field[][] = null;
-
-    private void MainController() { }
+    private List<Line> lines = new ArrayList<>();
 
     @FXML public void action(ActionEvent event) {
-
-        if(event.getSource().equals(menuNewGame)) {
-            Model.getIntance().newGame(EGameMode.offline, 3, 3);
-        }
+        if(event.getSource().equals(menuNewGame))
+            Core.getIntance().openGameSettings();
 
         else if(event.getSource().equals(menuSearch)) {
             //
@@ -52,15 +53,15 @@ public class MainController implements Initializable, ListenerWithSize {
             Core.getIntance().changeLogin();
         }
 
-        else if(event.getSource().equals(menuClose)) {
+        else if(event.getSource().equals(menuClose))
             Core.getIntance().close();
-        }
 
         else
             for(int x = 0; x < field.length; x++)
                 for(int y = 0; y < field.length; y++)
                     if(event.getSource().equals(field[x][y]))
-                        Model.getIntance().getGame().move(x, y, EPlayer.FirstPlayer);
+                        if (Model.getIntance().getGame().getField(x, y).equals(EField.Empty))
+                            Model.getIntance().getGame().move(x, y, EPlayer.FirstPlayer);
     }
     
     @Override
@@ -99,14 +100,19 @@ public class MainController implements Initializable, ListenerWithSize {
     }
 
     private void createFields() {
-        if(Model.getIntance().getGame().getGameSize() > 0) field = new Button[Model.getIntance().getGame().getGameSize()][Model.getIntance().getGame().getGameSize()];
+        gamePane.setPrefWidth(34 * 2 + 24 * Model.getIntance().getGame().getGameSize());
+        gamePane.setPrefHeight(25 * 2 + 20 + 25 * Model.getIntance().getGame().getGameSize());
+
+        if(Model.getIntance().getGame().getGameSize() > 0)
+            field = new Button[Model.getIntance().getGame().getGameSize()][Model.getIntance().getGame().getGameSize()];
+
         for(int x = 0; x < Model.getIntance().getGame().getGameSize(); x++) {
             for(int y = 0; y < Model.getIntance().getGame().getGameSize(); y++) {
                 field[x][y] = new Button();
-                field[x][y].setLayoutX(21 + 24 * x);
-                field[x][y].setLayoutY(14 + 25 * y);
-                field[x][y].setPrefHeight(25);
+                field[x][y].setLayoutX(34 + 24 * x);
+                field[x][y].setLayoutY(25 + 25 * y);
                 field[x][y].setPrefWidth(24);
+                field[x][y].setPrefHeight(25);
                 field[x][y].setMnemonicParsing(false);
                 field[x][y].setId("field[" + x + "," + y + "]");
                 field[x][y].setOnAction(this::action);
@@ -114,6 +120,32 @@ public class MainController implements Initializable, ListenerWithSize {
             }
         }
         updateFields();
+    }
+
+    private void printLines(List<WinLine> winLines) {
+        for (WinLine winLine : winLines) {
+            Line line = new Line();
+            int dx = 0, dy = 0;
+            Button beginField = field[winLine.getBeginX()][winLine.getBeginY()];
+            Button endField = field[winLine.getEndX()][winLine.getEndY()];
+            if (winLine.getEndX() > winLine.getBeginX())
+                dx = 10;
+            else if (winLine.getEndX() < winLine.getBeginX())
+                dx = -10;
+            if (winLine.getEndY() > winLine.getBeginY())
+                dy = 10;
+            else if (winLine.getEndY() < winLine.getBeginY())
+                dy = -10;
+            line.setLayoutX(beginField.getLayoutX() + 12 - dx);
+            line.setLayoutY(beginField.getLayoutY() + 12 - dy);
+            line.setStartX(0);
+            line.setStartY(0);
+            line.setEndX(endField.getLayoutX() - beginField.getLayoutX() + dx * 2);
+            line.setEndY(endField.getLayoutY() - beginField.getLayoutY() + dy * 2);
+            line.styleProperty().setValue("-fx-stroke: Gray;");
+            lines.add(line);
+            gamePane.getChildren().add(line);
+        }
     }
 
     private void updateFields() {
@@ -134,7 +166,14 @@ public class MainController implements Initializable, ListenerWithSize {
                 labelEndGameText.setText("Вы проиграли!");
             else
                 labelEndGameText.setText("Ничья!");
+            if(lines.isEmpty())
+                printLines(Model.getIntance().getGame().getWinLines());
         } else {
+            if(!lines.isEmpty()) {
+                for (Line line : lines)
+                    gamePane.getChildren().remove(line);
+                lines.removeAll(lines);
+            }
             labelEndGameText.setText("");
             for(int x = 0; x < Model.getIntance().getGame().getGameSize(); x++)
                 for (int y = 0; y < Model.getIntance().getGame().getGameSize(); y++)
@@ -152,4 +191,13 @@ public class MainController implements Initializable, ListenerWithSize {
         return mainPane.getPrefHeight();
     }
 
+    @Override
+    public void setDisable(boolean value) {
+        mainPane.setDisable(value);
+    }
+
+    @Override
+    public boolean isDisable() {
+        return mainPane.isDisable();
+    }
 }

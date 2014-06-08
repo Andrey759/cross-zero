@@ -1,8 +1,12 @@
 package View;
 
 import java.io.IOException;
+import java.util.Stack;
 
+import Controller.Classes.ExceptionLog;
+import Controller.Classes.ListenerHasSizeDisable;
 import Controller.Core;
+import View.ENum.EForm;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -19,6 +23,8 @@ public class Forms extends Application {
 //    }
 
     private static Stage stage;
+    private static Stack<Stage> stages = new Stack<>();
+    private static Stack<ListenerHasSizeDisable> controllers = new Stack<>();
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -27,8 +33,8 @@ public class Forms extends Application {
             f.setScene(new Scene(FXMLLoader.load(getClass().getResource("Elements/" + f.getFileName()))));
             f.setSize(f.getController().getWidth(), f.getController().getHeight());
         }
-        stage.setResizable(false);
         stage.setTitle(EForm.LoginForm.getTitle());
+        stage.setResizable(EForm.LoginForm.isResizable());
         stage.setScene(EForm.LoginForm.getScene());
         Core.getIntance().setCurrentController(EForm.LoginForm.getController());
         stage.show();
@@ -47,10 +53,12 @@ public class Forms extends Application {
     }
 
     public static void setWidth(Double width) {
+        stage.setMinWidth(width + 16);
         stage.setWidth(width + 16);
     }
 
     public static void setHeight(Double height) {
+        stage.setMinHeight(height + 38);
         stage.setHeight(height + 38);
     }
 
@@ -69,6 +77,7 @@ public class Forms extends Application {
     public static void setScene(EForm scene) {
         stage.hide();
         stage.setTitle(scene.getTitle());
+        stage.setResizable(scene.isResizable());
         stage.setScene(scene.getScene());
         setWidth(scene.getWidth());
         setHeight(scene.getHeight());
@@ -81,15 +90,21 @@ public class Forms extends Application {
     }
 
     public static void newWindow(EForm scene) {
-        Stage wStage = new Stage();
-        wStage.setResizable(false);
-        wStage.setTitle(scene.getTitle());
-        wStage.setScene(scene.getScene());
+        Core.getIntance().getCurrentController().setDisable(true);
+
+        stages.add(stage);
+        controllers.add(Core.getIntance().getCurrentController());
+        stage = new Stage();
+        stage.setResizable(scene.isResizable());
+        stage.setTitle(scene.getTitle());
+        stage.setScene(scene.getScene());
 
         Core.getIntance().setCurrentController(scene.getController());
         Core.getIntance().getCurrentController().update();
 
-        wStage.show();
+        stage.setOnCloseRequest(value -> Forms.close());
+
+        stage.show();
     }
 
     public void updateScene() throws IOException {
@@ -103,6 +118,13 @@ public class Forms extends Application {
 
     public static void close() {
         stage.close();
+        if(!stages.isEmpty()) {
+            stage = stages.pop();
+            if(!controllers.isEmpty())
+                Core.getIntance().setCurrentController(controllers.pop());
+            else
+                ExceptionLog.println("Ошибка: Стэк controllers, работающий синхронно со стэком stages оказаля пустым, в то время, как stages - нет.");
+            Core.getIntance().getCurrentController().setDisable(false);
+        }
     }
-
 }

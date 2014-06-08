@@ -1,26 +1,26 @@
-package View;
+package View.ENum;
 
-import Controller.Classes.Listener;
-import Controller.Classes.ListenerWithSize;
+import Controller.Classes.ListenerHasSizeDisable;
 import javafx.scene.Scene;
-import javax.swing.GroupLayout.Group;
 
 public enum EForm {
     
-    LoginForm("LoginForm.fxml", "Аутентификация"),
-    MainForm("MainForm.fxml", "Игра крестики-нолики"),
-    GameSettingsForm("GameSettingsForm.fxml", "Новая игра");
+    LoginForm("LoginForm.fxml", "Аутентификация", false),
+    MainForm("MainForm.fxml", "Игра крестики-нолики", true),
+    GameSettingsForm("GameSettingsForm.fxml", "Новая игра", false);
     
     private String fileName;
     private String title;
+    private boolean resizable;
     private Scene scene;
     private Double width;
     private Double height;
-    private ListenerWithSize controller;
+    private ListenerHasSizeDisable controller;
     
-    private EForm(String fileName, String startTitle) {
+    private EForm(String fileName, String startTitle, boolean resizable) {
         this.fileName = fileName;
         this.title = startTitle;
+        this.resizable = resizable;
     }
     
     public String getFileName() {
@@ -30,7 +30,11 @@ public enum EForm {
     public String getTitle() {
         return title;
     }
-    
+
+    public boolean isResizable() {
+        return resizable;
+    }
+
     public Scene getScene() {
         return scene;
     }
@@ -52,11 +56,11 @@ public enum EForm {
         this.height = height;
     }
 
-    public ListenerWithSize getController() {
+    public ListenerHasSizeDisable getController() {
         return controller;
     }
     
-    public void setController(ListenerWithSize controller) {
+    public void setController(ListenerHasSizeDisable controller) {
         this.controller = controller;
     }
 

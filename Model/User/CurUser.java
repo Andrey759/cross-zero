@@ -48,31 +48,36 @@ public class CurUser extends User {
             this.nick = nick;
             this.hpass = hpass;
             file.makeDir(dir);
-            if (!file.issetFile(filename)) { //Если нету такого пользователя - создаём
-                writeNewUser();
-                Core.getIntance().successfulLogin();    //Входим
-            } else {
-                file.openRd(filename);
-                if (!nick.equals("Компьютер")) filehpass = file.readStr();
-                if (filehpass == null) {                    //Если ошабка чтения файла,
-                    writeNewUser();                         //то создаём пользователя заново
-                    ExceptionLog.println("Ошибка: Не удалось прочитать из файла хэш пароля пользователя " + nick + ". Создан новый профиль пользователя.");
-                    return;
-                }
-                if ((wins = file.readUnsignedInt()) == -1) {
+            try {
+                if (!file.issetFile(filename)) { //Если нету такого пользователя - создаём
                     writeNewUser();
-                    ExceptionLog.println("Ошибка: Не удалось прочитать из файла количество побед пользователя " + nick + ". Создан новый профиль пользователя.");
-                    return;
+                    Core.getIntance().successfulLogin();    //Входим
+                } else {
+                    file.openRd(filename);
+                    if (!nick.equals("Компьютер")) filehpass = file.readStr();
+                    if (filehpass == null) {                    //Если ошабка чтения файла,
+                        writeNewUser();                         //то создаём пользователя заново
+                        ExceptionLog.println("Ошибка: Не удалось прочитать из файла хэш пароля пользователя " + nick + ". Создан новый профиль пользователя.");
+                        return;
+                    }
+                    if ((wins = file.readUnsignedInt()) == -1) {
+                        writeNewUser();
+                        ExceptionLog.println("Ошибка: Не удалось прочитать из файла количество побед пользователя " + nick + ". Создан новый профиль пользователя.");
+                        return;
+                    }
+                    if ((loses = file.readUnsignedInt()) == -1) {
+                        writeNewUser();
+                        ExceptionLog.println("Ошибка: Не удалось прочитать из файла количество проигрышей пользователя " + nick + ". Создан новый профиль пользователя.");
+                        return;
+                    }
+                    file.close();
+                    if (!hpass.trim().equals(filehpass.trim()))
+                        empty();                                   //Если пароль неверный, то пользователь пустой
+                    notifyListeners();
                 }
-                if ((loses = file.readUnsignedInt()) == -1) {
-                    writeNewUser();
-                    ExceptionLog.println("Ошибка: Не удалось прочитать из файла количество проигрышей пользователя " + nick + ". Создан новый профиль пользователя.");
-                    return;
-                }
-                file.close();
-                if (!hpass.trim().equals(filehpass.trim()))
-                    empty();                                   //Если пароль неверный, то пользователь пустой
-                notifyListeners();
+            } catch (Exception e) {
+                empty();
+                ExceptionLog.println("Ошибка: Не удалось обработать пользователя " + nick);
             }
         } else
             empty();
@@ -85,11 +90,16 @@ public class CurUser extends User {
     }
 
     public void save() {
-        file.openWr(dir+"\\"+getNick()+".txt");
-        file.write(hpass);
-        file.write(getWins());
-        file.write(getLoses());
-        file.close();
+        try {
+            file.openWr(dir + "\\" + getNick() + ".txt");
+            file.write(hpass);
+            file.write(getWins());
+            file.write(getLoses());
+            file.close();
+        } catch (Exception e) {
+            empty();
+            ExceptionLog.println("Ошибка: Не удалось записать в файл пользователя " + getNick());
+        }
     }
 
     public void empty() {

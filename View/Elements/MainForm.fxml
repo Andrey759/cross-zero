@@ -3,15 +3,16 @@
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="mainPane" prefHeight="324.0" prefWidth="534.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainController">
-<children><MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="534.0">
+<AnchorPane fx:id="mainPane" minHeight="324.0" minWidth="534.0" prefHeight="324.0" prefWidth="534.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainController">
+<children><MenuBar prefHeight="25.0" prefWidth="534.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
   <menus>
     <Menu mnemonicParsing="false" text="Файл">
         <items>
             <MenuItem fx:id="menuNewGame" mnemonicParsing="false" onAction="#action" text="Новая игра..." />
-            <MenuItem fx:id="menuSearch" visible="false" mnemonicParsing="false" onAction="#action" text="Поиск открытых игр..." />
+            <MenuItem fx:id="menuSearch" mnemonicParsing="false" onAction="#action" text="Поиск открытых игр..." visible="false" />
             <SeparatorMenuItem />
             <MenuItem fx:id="menuChangeUser" mnemonicParsing="false" onAction="#action" text="Сменить пользователя" />
             <MenuItem fx:id="menuClose" mnemonicParsing="false" onAction="#action" text="Выход" />
@@ -24,7 +25,7 @@
     </Menu>
   </menus>
 </MenuBar>
-<TitledPane fx:id="firstPlayerNick" layoutX="8.0" layoutY="34.0" text="Игрок 1">
+<TitledPane fx:id="firstPlayerNick" layoutX="8.0" layoutY="34.0" text="Игрок 1" AnchorPane.leftAnchor="8.0">
     <content>
         <AnchorPane prefHeight="68.0" prefWidth="102.0">
             <children>
@@ -33,7 +34,7 @@
             </children></AnchorPane>
     </content>
 </TitledPane>
-<TitledPane fx:id="secondPlayerNick" layoutX="422.0" layoutY="34.0" text="Игрок 2">
+<TitledPane fx:id="secondPlayerNick" layoutX="422.0" layoutY="34.0" text="Игрок 2" AnchorPane.rightAnchor="8.0">
     <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="68.0" prefWidth="102.0">
             <children>
@@ -43,13 +44,15 @@
         </AnchorPane>
     </content>
 </TitledPane>
-<Label layoutX="7.0" layoutY="279.0" text="Время на ход:" />
-<Label layoutX="30.0" layoutY="299.0" text="03:00" />
-<Label layoutX="449.0" layoutY="280.0" text="Время на ход:" />
-<Label layoutX="472.0" layoutY="300.0" text="03:00" /><AnchorPane fx:id="gamePane" layoutX="214.0" layoutY="98.0" prefHeight="113.0" prefWidth="106.0" />
-<Label fx:id="labelEndGameText" alignment="CENTER" layoutX="196.0" layoutY="211.0" prefHeight="30.0" prefWidth="142.0" textAlignment="CENTER" wrapText="true">
+    <BorderPane layoutX="16.0" layoutY="-46.0" prefHeight="273.0" prefWidth="292.0" AnchorPane.bottomAnchor="18.0" AnchorPane.leftAnchor="122.0" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="33.0">
+<center>
+    <AnchorPane fx:id="gamePane" layoutX="342.0" layoutY="220.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="137.0" prefWidth="118.0" AnchorPane.bottomAnchor="113.0" AnchorPane.leftAnchor="214.0" AnchorPane.rightAnchor="214.0" AnchorPane.topAnchor="98.0" BorderPane.alignment="CENTER">
+<children>
+<Label fx:id="labelEndGameText" alignment="CENTER" layoutX="1.0" layoutY="99.0" prefHeight="30.0" prefWidth="117.0" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" BorderPane.alignment="TOP_CENTER">
     <font>
     <Font size="20.0" />
     </font>
 </Label>
+</children></AnchorPane>
+</center></BorderPane>
 </children></AnchorPane>

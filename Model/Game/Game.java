@@ -71,6 +71,10 @@ public class Game {
         return winner;
     }
 
+    public ArrayList<WinLine> getWinLines() {
+        return winLines;
+    }
+
     public EField getField(int x, int y) {
         try {
             if (!(x >= 0 && x < gameSize && y >= 0 && y < gameSize))

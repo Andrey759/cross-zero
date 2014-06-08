@@ -1,17 +1,14 @@
 package Controller;
 
-import java.io.IOException;
-
-import Controller.Classes.Listener;
-import Model.Model;
-import View.EForm;
+import Controller.Classes.ListenerHasSizeDisable;
+import View.ENum.EForm;
 import View.Forms;
 
 //неленивый сингтон
 public class Core {
     
     private static Core instance = new Core();
-    private Listener currentController;
+    private ListenerHasSizeDisable currentController;
     
     public static Core getIntance() {
         return instance;
@@ -19,11 +16,11 @@ public class Core {
     
     private Core() { }
 
-    public Listener getCurrentController() {
+    public ListenerHasSizeDisable getCurrentController() {
         return currentController;
     }
 
-    public void setCurrentController(Listener currentController) {
+    public void setCurrentController(ListenerHasSizeDisable currentController) {
         this.currentController = currentController;
     }
     
