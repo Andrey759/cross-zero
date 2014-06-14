@@ -44,6 +44,10 @@
         </AnchorPane>
     </content>
 </TitledPane>
+    <Label layoutX="23.0" layoutY="266.0" text="Время на ход:" AnchorPane.bottomAnchor="41.0" AnchorPane.leftAnchor="21.0" />
+    <Label fx:id="labelFirstPlayerTime" layoutX="49.0" layoutY="289.0" text="03:00" AnchorPane.bottomAnchor="18.0" AnchorPane.leftAnchor="45.0" />
+    <Label layoutX="436.0" layoutY="269.0" text="Время на ход:" AnchorPane.bottomAnchor="41.0" AnchorPane.rightAnchor="21.0" />
+    <Label fx:id="labelSecondPlayerTime" layoutX="459.0" layoutY="292.0" text="03:00" AnchorPane.bottomAnchor="18.0" AnchorPane.rightAnchor="45.0" />
     <BorderPane layoutX="16.0" layoutY="-46.0" prefHeight="273.0" prefWidth="292.0" AnchorPane.bottomAnchor="18.0" AnchorPane.leftAnchor="122.0" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="33.0">
 <center>
     <AnchorPane fx:id="gamePane" layoutX="342.0" layoutY="220.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="137.0" prefWidth="118.0" AnchorPane.bottomAnchor="113.0" AnchorPane.leftAnchor="214.0" AnchorPane.rightAnchor="214.0" AnchorPane.topAnchor="98.0" BorderPane.alignment="CENTER">

@@ -1,6 +1,7 @@
 package Model.Game;
 
 import Controller.Classes.ExceptionLog;
+import Controller.Classes.TimerClass;
 import Controller.Core;
 import Model.Game.ENum.EField;
 import Model.Game.ENum.ELine;
@@ -8,6 +9,7 @@ import Model.Game.ENum.EPlayer;
 import Model.Game.GameClasses.Point;
 import Model.Game.GameClasses.WinLine;
 import Model.Model;
+import View.ENum.EForm;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +21,8 @@ public class Game {
     private EField[][] field;
     private EField firstPlayer;
     private EField secondPlayer;
+    private TimerClass firstPlayerTimer;
+    private TimerClass secondPlayerTimer;
     List<Point> emptyFields = new ArrayList<>();
 //  private int[][] priority;
     ArrayList<WinLine> winLines;
@@ -43,10 +47,14 @@ public class Game {
             gameIsEnded = false;
             winner = null;
 
+            firstPlayerTimer = new TimerClass(3, 0);
+            secondPlayerTimer = new TimerClass(3, 0);
+
             rand = (int) (Math.random() * 2);
             if (rand == 0) {
                 firstPlayer = EField.Cross;
                 secondPlayer = EField.Zero;
+                firstPlayerTimer.start();
             } else {
                 firstPlayer = EField.Zero;
                 secondPlayer = EField.Cross;
@@ -61,6 +69,14 @@ public class Game {
 
     public int getWinLength() {
         return winLength;
+    }
+
+    public TimerClass getFirstPlayerTimer() {
+        return firstPlayerTimer;
+    }
+
+    public TimerClass getSecondPlayerTimer() {
+        return secondPlayerTimer;
     }
 
     public boolean isGameIsEnded() {
@@ -93,7 +109,14 @@ public class Game {
                         field[x][y] = secondPlayer;
                     for(int i = 0; i < emptyFields.size(); i++)
                         if(emptyFields.get(i).x == x && emptyFields.get(i).y == y) emptyFields.remove(i);
+                    firstPlayerTimer.resetAndFinish();
+                    secondPlayerTimer.resetAndFinish();
                     tryWinAndUpdate();
+                    if(!isGameIsEnded())
+                        if(player == EPlayer.FirstPlayer)
+                            secondPlayerTimer.start();
+                        else
+                            firstPlayerTimer.start();
                 } else
                     throw new ExceptionLog("Ошибка: попытка хода в занятое поле.");
             } else

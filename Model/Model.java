@@ -52,6 +52,8 @@ public class Model {
 
     public void empty() {
         secondUser = new EmptyUser();
+        getGame().getFirstPlayerTimer().close();
+        getGame().getSecondPlayerTimer().close();
         game = new EmptyGame();
     }
     

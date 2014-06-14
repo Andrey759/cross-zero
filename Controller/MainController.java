@@ -6,6 +6,7 @@ import Model.Game.ENum.EPlayer;
 import Model.Game.GameClasses.WinLine;
 import Model.Model;
 import View.ENum.EForm;
+import javafx.animation.AnimationTimer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -17,9 +18,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Line;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 //Контроллер первого представления, ленивый синглтон
 public class MainController implements Initializable, ListenerHasSizeDisable {
@@ -30,6 +29,8 @@ public class MainController implements Initializable, ListenerHasSizeDisable {
     @FXML private Label labelFirstPlayerLoses;
     @FXML private Label labelSecondPlayerWins;
     @FXML private Label labelSecondPlayerLoses;
+    @FXML private Label labelFirstPlayerTime;
+    @FXML private Label labelSecondPlayerTime;
     @FXML private TitledPane firstPlayerNick;
     @FXML private TitledPane secondPlayerNick;
     @FXML private Label labelEndGameText;
@@ -48,10 +49,8 @@ public class MainController implements Initializable, ListenerHasSizeDisable {
             //
         }
 
-        else if(event.getSource().equals(menuChangeUser)) {
-            Model.getIntance().empty();
+        else if(event.getSource().equals(menuChangeUser))
             Core.getIntance().changeLogin();
-        }
 
         else if(event.getSource().equals(menuClose))
             Core.getIntance().close();
@@ -67,10 +66,43 @@ public class MainController implements Initializable, ListenerHasSizeDisable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         EForm.MainForm.setController(this);
+        AnimationTimer timer = new AnimationTimer(){
+            @Override
+            public void handle(long now) {
+                showAnimaton();
+            }
+        };
+        timer.start();
+    }
+
+    private void showAnimaton() {
+        String time;
+        if(Model.getIntance().getGame().getFirstPlayerTimer().getMinutes() < 10)
+            time = "0";
+        else
+            time = "";
+        time = time + Model.getIntance().getGame().getFirstPlayerTimer().getMinutes() + ":";
+        if(Model.getIntance().getGame().getFirstPlayerTimer().getSeconds() < 10)
+            time = time + "0";
+        time = time + Model.getIntance().getGame().getFirstPlayerTimer().getSeconds();
+        labelFirstPlayerTime.setText(time);
+
+        if(Model.getIntance().getGame().getSecondPlayerTimer().getMinutes() < 10)
+            time = "0";
+        else
+            time = "";
+        time = time + Model.getIntance().getGame().getSecondPlayerTimer().getMinutes() + ":";
+        if(Model.getIntance().getGame().getSecondPlayerTimer().getSeconds() < 10)
+            time = time + "0";
+        time = time + Model.getIntance().getGame().getSecondPlayerTimer().getSeconds();
+        labelSecondPlayerTime.setText(time);
+
+        if(Model.getIntance().getGame().getFirstPlayerTimer().getTime() <= 0) Model.getIntance().getGame().autoTurn(EPlayer.SecondPlayer);
     }
     
     @Override
     public void update() {
+        int i = 59;
         firstPlayerNick.setText(Model.getIntance().getFirstUser().getNick());
         labelFirstPlayerWins.setText("Побед: " + Model.getIntance().getFirstUser().getWins());
         labelFirstPlayerLoses.setText("Поражений: " + Model.getIntance().getFirstUser().getLoses());
@@ -183,7 +215,7 @@ public class MainController implements Initializable, ListenerHasSizeDisable {
 
     @Override
     public double getWidth() {
-        return mainPane.getPrefWidth() - 9;
+        return mainPane.getPrefWidth() - 10;
     }
 
     @Override
