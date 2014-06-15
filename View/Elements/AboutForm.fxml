@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="169.0" prefWidth="211.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.AboutController">
+<children>
+    <Label layoutX="52.0" layoutY="34.0" text="Проект разработал" />
+    <Label layoutX="34.0" layoutY="51.0" text="Ребров Андрей Игоревич" />
+    <Label layoutX="74.0" layoutY="68.0" text="в 2014 году" />
+    <Button fx:id="buttonOk" cancelButton="true" defaultButton="true" layoutX="70.0" layoutY="130.0" mnemonicParsing="false" onAction="#action" prefHeight="25.0" prefWidth="71.0" text="Ок" />
+</children></AnchorPane>

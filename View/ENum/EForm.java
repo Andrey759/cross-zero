@@ -7,7 +7,8 @@ public enum EForm {
     
     LoginForm("LoginForm.fxml", "Аутентификация", false),
     MainForm("MainForm.fxml", "Игра крестики-нолики", true),
-    GameSettingsForm("GameSettingsForm.fxml", "Новая игра", false);
+    GameSettingsForm("GameSettingsForm.fxml", "Новая игра", false),
+    AboutForm("AboutForm.fxml", "О программе", false);
     
     private String fileName;
     private String title;

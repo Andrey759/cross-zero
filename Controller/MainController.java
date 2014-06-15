@@ -38,6 +38,7 @@ public class MainController implements Initializable, ListenerHasSizeDisable {
     @FXML private MenuItem menuSearch;
     @FXML private MenuItem menuChangeUser;
     @FXML private MenuItem menuClose;
+    @FXML private MenuItem menuAbout;
     private Button field[][] = null;
     private List<Line> lines = new ArrayList<>();
 
@@ -54,6 +55,9 @@ public class MainController implements Initializable, ListenerHasSizeDisable {
 
         else if(event.getSource().equals(menuClose))
             Core.getIntance().close();
+
+        else if(event.getSource().equals(menuAbout))
+            Core.getIntance().openAbout();
 
         else
             for(int x = 0; x < field.length; x++)

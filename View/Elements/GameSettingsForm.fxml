@@ -10,8 +10,11 @@
         <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="40.0" prefWidth="241.0">
                 <children>
-                    <RadioButton fx:id="raioButtonOnline" disable="true" layoutX="12.0" layoutY="9.5" mnemonicParsing="false" selected="false" text="Онлайн" />
-                    <RadioButton fx:id="raioButtonOffline" layoutX="101.0" layoutY="10.0" mnemonicParsing="false" selected="true" text="Против компьютера" />
+                    <RadioButton fx:id="raioButtonOnline" disable="true" layoutX="12.0" layoutY="9.5" mnemonicParsing="false" selected="false" text="Онлайн">
+<toggleGroup>
+<ToggleGroup fx:id="radioGroupGameMode" />
+</toggleGroup></RadioButton>
+                    <RadioButton fx:id="raioButtonOffline" layoutX="101.0" layoutY="10.0" mnemonicParsing="false" selected="true" text="Против компьютера" toggleGroup="$radioGroupGameMode" />
                 </children>
             </AnchorPane>
         </content>

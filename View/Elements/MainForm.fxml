@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
 <AnchorPane fx:id="mainPane" minHeight="324.0" minWidth="534.0" prefHeight="324.0" prefWidth="534.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainController">
@@ -20,7 +18,7 @@
     </Menu>
     <Menu mnemonicParsing="false" text="Справка">
         <items>
-            <MenuItem mnemonicParsing="false" text="О программе" />
+            <MenuItem fx:id="menuAbout" mnemonicParsing="false" onAction="#action" text="О программе" />
         </items>
     </Menu>
   </menus>

@@ -35,6 +35,10 @@ public class Core {
     public void openGameSettings() {
         Forms.newWindow(EForm.GameSettingsForm);
     }
+
+    public void openAbout() {
+        Forms.newWindow(EForm.AboutForm);
+    }
     
     public void update() {
         this.getCurrentController().update();
